@@ -1,0 +1,2 @@
+import function_test
+print(is_even(3))
