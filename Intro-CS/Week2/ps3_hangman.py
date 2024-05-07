@@ -123,11 +123,14 @@ def hangman(secretWord):
     '''
     #how many letters in the secretWord? Print underscores and guessed letters
     lettersGuessed = []
+    guesses = 0
     print(getGuessedWord(secretWord, lettersGuessed))
     guessing = True
     while guessing:
         guess = input("What letter would you like to choose?\n")
-        lettersGuessed.append(guess)
+        if guess not in lettersGuessed:
+            lettersGuessed.append(guess)
+            guesses = guesses + 1
         print(getGuessedWord(secretWord, lettersGuessed) + "\n")
         if isWordGuessed(secretWord, lettersGuessed):
             guessing = False

@@ -1,0 +1,7 @@
+syntaxError: python can't parse the program
+NameError: local or global name not found
+AttributeError: attribute referene fails
+TypeError: operand doesn't have correct type
+ValueError: operand type okay but the value is illegal
+IOError: IO system reports malfunction (file not found)
+
