@@ -1,0 +1,40 @@
+netstat -tulpna --> ss -tupna
+ss -tuna4 (all network sockets using IPv4 and both the TCP and UDP in numeric format
+arp --> ip neigh
+ifconfig --> ip addr
+
+rpm -v <package> #checksum of rpms
+#install a package from an ftp w/ username and password:
+rpm -ivh ftp://<username>:<password>@<address>/<packageName>
+#import a gpg key:
+rpm --import /path/to/key
+
+#some descriptions of folder locations:
+- config- kernel configuration settings
+- efi/ files required at boot by the UEFI firmware
+- grub2/ grub config files
+- initramfs- RAM disk filesystem, root filesystem called during boot?
+- loader/ boot configs for the kernel
+- system.map-* map of system names for vairable functions with their locations in memory
+- vmlinuz-* actual linux kernel
+#recovery:
+delete rhgb quiet
+systemd.unit=rescue.target    ----all mounted
+systemd.unit=emergency.target ----nothing is mounted
+
+#without root password
+rd.break              # missing root password
+mount -o remount,rw /sysroot
+chroot /sysroot
+passwd
+touch /.autorelabel   #for selinux
+reboot
+systemctl get-default #gets default boot
+
+
+#generate random password for root:
+openssl rand -base64 15 | passwd --stdin root #this will hide the root password....don't do this...just wrote it down because it captures how to pass an output into a new command
+
+
+
+
