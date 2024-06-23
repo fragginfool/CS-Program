@@ -1,0 +1,18 @@
+set -eux
+#When combined as set -eux, this command will:
+#Exit the script immediately if any command fails.
+#Throw an error if any variable is used without being initialized.
+#Print each command to the terminal before it is executed, helping in debugging.
+
+cgroups v2 uses systemd...
+
+vim /etc/systemd/system/container_service.slice
+
+[Unit]
+Description=My Custom Slice
+
+[Slice]
+CPUQuota=20%
+MemoryLimit=500M
+
+

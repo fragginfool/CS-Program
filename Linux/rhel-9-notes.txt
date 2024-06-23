@@ -34,7 +34,3 @@ systemctl get-default #gets default boot
 
 #generate random password for root:
 openssl rand -base64 15 | passwd --stdin root #this will hide the root password....don't do this...just wrote it down because it captures how to pass an output into a new command
-
-
-
-
