@@ -16,3 +16,45 @@ CPUQuota=20%
 MemoryLimit=500M
 
 
+Docker Files:
+#setting variables:
+ARG VERSION=16.04
+ARG PLATFORM=linux/amd64
+FROM --platform=${PLATFORM} ubuntu:${VERSION}
+
+#EXAMPLE:
+# setting the base image
+ARG VERSION=18.04
+FROM ubuntu:${VERSION}
+
+# customizations
+RUN apt-get update && apt-get install -y curl nginx \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+RUN mkdir /test-dir
+ENV USER Dhwani
+ENV SHELL /bin/bash
+EXPOSE 80
+
+# providing a default command
+CMD ["nginx", "-g", "daemon off;"]
+
+#Remember to name your file "Dockerfile" with no extensions and put them in their own directory
+
+#to build:
+docker build -t nginx .
+
+#to run:
+docker run –d --name nginx-container –p 80:80 nginx
+
+#Ran into errors when building with podman...had to use the following syntax when building:
+ podman build --format docker .
+# to get healthcheck to work.
+
+#to publish to docker hub:
+#setup repository first..in this case we setup a public repository called testrepo:
+podman images
+podman tag localhost/testrepo docker.io/fragginfool/testrepo:latest
+podman login docker.io
+#you can get a temp password from settings and security
+podman push docker.io/fragginfool/testrepo:latest
