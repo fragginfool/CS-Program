@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Waypoint | Plan, Track, Capture",
-  description: "A hub for tracking tasks, goals, appointments, and journaling in an Instagram style feed.",
+  description: "A hub for tracking tasks, goals, appointments, and visual journaling.",
 };
 
 export default function RootLayout({
@@ -26,10 +26,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen w-screen overflow-hidden flex bg-slate-50`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen w-screen overflow-hidden flex bg-black text-slate-100`}
       >
         <Sidebar />
-        <main className="flex-1 h-full overflow-y-auto bg-slate-50 text-slate-900">
+        <main className="flex-1 h-full overflow-y-auto bg-black text-slate-100">
           {children}
         </main>
       </body>

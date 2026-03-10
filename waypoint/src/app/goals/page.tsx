@@ -56,10 +56,10 @@ export default function GoalsPage() {
     <div className="max-w-6xl mx-auto py-8 px-8">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-semibold tracking-tight text-slate-900">Goals</h1>
-          <p className="text-slate-500 mt-1">Track your long-term objectives and milestones.</p>
+          <h1 className="text-3xl font-semibold tracking-tight text-zinc-100">Goals</h1>
+          <p className="text-zinc-400 mt-1">Track your long-term objectives and milestones.</p>
         </div>
-        <button className="flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors shadow-sm font-medium">
+        <button className="flex items-center gap-2 bg-emerald-600 text-white px-4 py-2 rounded-md hover:bg-emerald-700 transition-colors shadow-sm font-medium">
           <Plus size={20} />
           New Goal
         </button>
@@ -67,28 +67,28 @@ export default function GoalsPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6">
         {goals.map((goal) => (
-          <div key={goal.id} className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-md transition-shadow">
+          <div key={goal.id} className="bg-zinc-900 rounded-xl shadow-sm border border-zinc-800 overflow-hidden hover:shadow-md transition-shadow">
             <div className="p-6">
               <div className="flex justify-between items-start mb-4">
                 <div className="flex items-center gap-2">
                   <div className={`p-2 rounded-lg text-white ${goal.color}`}>
                     <Target size={20} />
                   </div>
-                  <span className="text-xs font-medium px-2.5 py-1 bg-slate-100 text-slate-600 rounded-full">
+                  <span className="text-xs font-medium px-2.5 py-1 bg-zinc-800 text-zinc-300 rounded-full">
                     {goal.category}
                   </span>
                 </div>
               </div>
 
-              <h3 className="text-lg font-semibold text-slate-900 mb-1">{goal.title}</h3>
-              <p className="text-sm text-slate-500 mb-6 line-clamp-2 min-h-[40px]">{goal.description}</p>
+              <h3 className="text-lg font-semibold text-zinc-100 mb-1">{goal.title}</h3>
+              <p className="text-sm text-zinc-400 mb-6 line-clamp-2 min-h-[40px]">{goal.description}</p>
 
               <div className="space-y-2">
                 <div className="flex justify-between text-sm font-medium">
-                  <span className="text-slate-700">Progress</span>
-                  <span className="text-slate-900">{goal.progress}%</span>
+                  <span className="text-zinc-400">Progress</span>
+                  <span className="text-zinc-200">{goal.progress}%</span>
                 </div>
-                <div className="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
+                <div className="w-full bg-zinc-800 rounded-full h-2.5 overflow-hidden">
                   <div
                     className={`h-2.5 rounded-full ${goal.color}`}
                     style={{ width: `${goal.progress}%` }}
@@ -97,12 +97,12 @@ export default function GoalsPage() {
               </div>
             </div>
 
-            <div className="bg-slate-50 px-6 py-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-medium">
+            <div className="bg-zinc-950/50 px-6 py-3 border-t border-zinc-800 flex items-center justify-between text-xs text-zinc-500 font-medium">
               <div className="flex items-center gap-1.5">
                 <Clock size={14} />
                 <span>Target: {new Date(goal.targetDate).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}</span>
               </div>
-              <div className="flex items-center gap-1.5 text-indigo-600 cursor-pointer hover:text-indigo-800 transition-colors">
+              <div className="flex items-center gap-1.5 text-emerald-500 cursor-pointer hover:text-emerald-400 transition-colors">
                 <Activity size={14} />
                 <span>View Details</span>
               </div>

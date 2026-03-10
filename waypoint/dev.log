@@ -14,3 +14,19 @@
  GET /tasks 200 in 1443ms (compile: 1252ms, render: 190ms)
  GET /goals 200 in 609ms (compile: 509ms, render: 99ms)
  GET /calendar 200 in 685ms (compile: 580ms, render: 105ms)
+✓ Compiled in 1125ms
+✓ Compiled in 209ms
+✓ Compiled in 179ms
+✓ Compiled in 77ms
+✓ Compiled in 24ms
+✓ Compiled in 27ms
+✓ Compiled in 22ms
+✓ Compiled in 654ms
+✓ Compiled in 64ms
+✓ Compiled in 20ms
+ GET / 200 in 1671ms (compile: 492ms, render: 1179ms)
+ GET / 200 in 141ms (compile: 11ms, render: 130ms)
+ GET / 200 in 125ms (compile: 3ms, render: 122ms)
+ GET /tasks 200 in 1073ms (compile: 740ms, render: 333ms)
+ GET /goals 200 in 375ms (compile: 111ms, render: 264ms)
+ GET /calendar 200 in 226ms (compile: 102ms, render: 124ms)
