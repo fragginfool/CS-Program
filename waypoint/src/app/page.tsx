@@ -1,4 +1,5 @@
 import PostCard, { Post } from '@/components/PostCard';
+import ActivityHeatmap from '@/components/ActivityHeatmap';
 import { Camera } from 'lucide-react';
 
 const mockPosts: Post[] = [
@@ -26,7 +27,10 @@ const mockPosts: Post[] = [
 
 export default function Home() {
   return (
-    <div className="max-w-xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+    <div className="max-w-3xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+      {/* Activity Heatmap */}
+      <ActivityHeatmap />
+
       {/* Header / Journal top */}
       <div className="flex items-center justify-between mb-8 pb-4 border-b border-zinc-800">
         <h1 className="text-2xl font-semibold tracking-tight text-zinc-100">Journal</h1>
@@ -36,7 +40,7 @@ export default function Home() {
       </div>
 
       {/* Journal list */}
-      <div className="space-y-8">
+      <div className="max-w-xl mx-auto space-y-8">
         {mockPosts.map((post) => (
           <PostCard key={post.id} post={post} />
         ))}
