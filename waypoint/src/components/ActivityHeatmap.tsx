@@ -41,7 +41,7 @@ function generateMockData(): Activity[] {
 }
 
 const theme: ThemeInput = {
-  light: ['#27272a', '#047857', '#059669', '#10b981', '#34d399'],
+  light: ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39'], // Standard GitHub/Google Light green
   dark: ['#27272a', '#064e3b', '#065f46', '#047857', '#10b981'],
 };
 
@@ -55,16 +55,16 @@ export default function ActivityHeatmap() {
   if (data.length === 0) return null;
 
   return (
-    <div className="bg-zinc-950 border border-zinc-800 rounded-xl p-6 mb-8 shadow-sm">
+    <div className="bg-white border border-gray-200 rounded-2xl p-6 mb-8 shadow-sm">
       <div className="flex flex-col gap-2">
-        <h2 className="text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-2">
+        <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">
           Activity Heatmap
         </h2>
         <div className="overflow-x-auto pb-2 scrollbar-hide">
           <ActivityCalendar
             data={data}
             theme={theme}
-            colorScheme="dark"
+            colorScheme="light"
             showWeekdayLabels={true}
             labels={{
               totalCount: '{{count}} activities in the last year',

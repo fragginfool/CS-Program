@@ -46,27 +46,27 @@ export default function TasksPage() {
   };
 
   const priorityColors = {
-    high: 'text-red-400 bg-red-950/30 border-red-900',
-    medium: 'text-amber-400 bg-amber-950/30 border-amber-900',
-    low: 'text-emerald-400 bg-emerald-950/30 border-emerald-900',
+    high: 'text-red-700 bg-red-50 border-red-200',
+    medium: 'text-amber-700 bg-amber-50 border-amber-200',
+    low: 'text-green-700 bg-green-50 border-green-200',
   };
 
   return (
     <div className="max-w-4xl mx-auto py-8 px-8">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-semibold tracking-tight text-zinc-100">Tasks</h1>
-          <p className="text-zinc-400 mt-1">Manage your day-to-day action items.</p>
+          <h1 className="text-3xl font-semibold tracking-tight text-gray-900">Tasks</h1>
+          <p className="text-gray-500 mt-1">Manage your day-to-day action items.</p>
         </div>
-        <button className="flex items-center gap-2 bg-emerald-600 text-white px-4 py-2 rounded-md hover:bg-emerald-700 transition-colors shadow-sm font-medium">
+        <button className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors shadow-sm font-medium">
           <Plus size={20} />
           New Task
         </button>
       </div>
 
-      <div className="bg-zinc-900 rounded-xl shadow-sm border border-zinc-800 overflow-hidden">
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
         {/* Header row */}
-        <div className="flex items-center px-6 py-3 border-b border-zinc-800 bg-zinc-950/50 text-xs font-semibold text-zinc-500 uppercase tracking-wider">
+        <div className="flex items-center px-6 py-3 border-b border-gray-200 bg-gray-50/50 text-xs font-semibold text-gray-500 uppercase tracking-wider">
           <div className="w-8"></div>
           <div className="flex-1">Task</div>
           <div className="w-32">Category</div>
@@ -80,7 +80,7 @@ export default function TasksPage() {
             <Droppable droppableId="tasks-list">
               {(provided) => (
                 <div
-                  className="divide-y divide-zinc-800/50 min-h-[100px]"
+                  className="divide-y divide-gray-100 min-h-[100px]"
                   {...provided.droppableProps}
                   ref={provided.innerRef}
                 >
@@ -91,11 +91,11 @@ export default function TasksPage() {
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                           className={`flex items-center px-6 py-4 transition-colors group ${
-                            snapshot.isDragging ? 'bg-zinc-800 shadow-md ring-1 ring-zinc-700' : 'hover:bg-zinc-800/50 bg-zinc-900'
+                            snapshot.isDragging ? 'bg-white shadow-lg ring-1 ring-gray-200 z-10' : 'hover:bg-gray-50 bg-white'
                           } ${task.completed ? 'opacity-60' : ''}`}
                         >
                           <div
-                            className="flex items-center justify-center w-8 h-8 -ml-2 mr-2 cursor-grab active:cursor-grabbing text-zinc-600 hover:text-zinc-400 opacity-50 group-hover:opacity-100 transition-opacity"
+                            className="flex items-center justify-center w-8 h-8 -ml-2 mr-2 cursor-grab active:cursor-grabbing text-gray-400 hover:text-gray-600 opacity-50 group-hover:opacity-100 transition-opacity"
                             {...provided.dragHandleProps}
                           >
                             <GripVertical size={18} />
@@ -106,25 +106,25 @@ export default function TasksPage() {
                               type="checkbox"
                               checked={task.completed}
                               onChange={() => toggleTask(task.id)}
-                              className="w-5 h-5 rounded border-zinc-700 bg-zinc-900 text-emerald-600 focus:ring-emerald-600 focus:ring-offset-zinc-900 cursor-pointer"
+                              className="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
                             />
-                            <span className={`font-medium ${task.completed ? 'line-through text-zinc-500' : 'text-zinc-200'}`}>
+                            <span className={`font-medium ${task.completed ? 'line-through text-gray-400' : 'text-gray-900'}`}>
                               {task.title}
                             </span>
                           </div>
 
-                          <div className="w-32 text-sm text-zinc-400">
+                          <div className="w-32 text-sm text-gray-500">
                             {task.category}
                           </div>
 
-                          <div className="w-32 flex items-center gap-2 text-sm text-zinc-400">
+                          <div className="w-32 flex items-center gap-2 text-sm text-gray-500">
                             {task.dueDate ? (
                               <>
-                                <Calendar size={14} className="text-zinc-500" />
+                                <Calendar size={14} className="text-gray-400" />
                                 {format(new Date(task.dueDate), 'MMM d, yyyy')}
                               </>
                             ) : (
-                              <span className="text-zinc-600">-</span>
+                              <span className="text-gray-300">-</span>
                             )}
                           </div>
 

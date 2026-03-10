@@ -32,10 +32,11 @@ export default function Home() {
       <ActivityHeatmap />
 
       {/* Header / Journal top */}
-      <div className="flex items-center justify-between mb-8 pb-4 border-b border-zinc-800">
-        <h1 className="text-2xl font-semibold tracking-tight text-zinc-100">Journal</h1>
-        <button className="bg-emerald-600 text-white p-2 rounded-full hover:bg-emerald-700 transition-colors shadow-sm">
+      <div className="flex items-center justify-between mb-8 pb-4 border-b border-gray-200">
+        <h1 className="text-2xl font-semibold tracking-tight text-gray-900">Journal</h1>
+        <button className="bg-blue-600 text-white p-3 rounded-2xl hover:bg-blue-700 transition-colors shadow-sm flex items-center gap-2">
           <Camera size={20} />
+          <span className="text-sm font-medium pr-1">New Entry</span>
         </button>
       </div>
 
