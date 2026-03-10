@@ -1,31 +1,22 @@
 import PostCard, { Post } from '@/components/PostCard';
 import ActivityHeatmap from '@/components/ActivityHeatmap';
 import { Camera } from 'lucide-react';
+import { getPosts } from '@/actions/postActions';
 
-const mockPosts: Post[] = [
-  {
-    id: '1',
-    author: 'Alex',
-    content: 'Feeling great after finishing the weekly goals review. Momentum is building.',
-    createdAt: new Date().toISOString(),
-    imageUrl: 'https://images.unsplash.com/photo-1517816743773-6e0fd518b4a6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-  },
-  {
-    id: '2',
-    author: 'Alex',
-    content: 'Just journaled about the new project phase. Clarity is key.',
-    createdAt: new Date(Date.now() - 3600000 * 2).toISOString(),
-  },
-  {
-    id: '3',
-    author: 'Alex',
-    content: 'Morning hike to clear the mind before a busy week.',
-    createdAt: new Date(Date.now() - 3600000 * 24).toISOString(),
-    imageUrl: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80',
-  }
-];
+export const dynamic = 'force-dynamic';
 
-export default function Home() {
+export default async function Home() {
+  const postsFromDb = await getPosts();
+
+  // Transform DB posts to match the PostCard prop type
+  const posts: Post[] = postsFromDb.map(post => ({
+    id: post.id,
+    author: post.author,
+    content: post.content,
+    imageUrl: post.imageUrl || undefined,
+    createdAt: post.createdAt.toISOString()
+  }));
+
   return (
     <div className="max-w-3xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
       {/* Activity Heatmap */}
@@ -42,9 +33,13 @@ export default function Home() {
 
       {/* Journal list */}
       <div className="max-w-xl mx-auto space-y-8">
-        {mockPosts.map((post) => (
-          <PostCard key={post.id} post={post} />
-        ))}
+        {posts.length === 0 ? (
+          <div className="text-center py-10 text-gray-500">No journal entries yet. Capture your first moment!</div>
+        ) : (
+          posts.map((post) => (
+            <PostCard key={post.id} post={post} />
+          ))
+        )}
       </div>
     </div>
   );

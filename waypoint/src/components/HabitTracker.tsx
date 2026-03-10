@@ -1,85 +1,88 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useTransition } from 'react';
 import { Plus, Check, Trash2 } from 'lucide-react';
+import { addHabit, deleteHabit, toggleHabit, getHabits } from '@/actions/habitActions';
+
+interface HabitLog {
+  date: string;
+  completed: boolean;
+}
 
 interface Habit {
   id: string;
   name: string;
+  logs: HabitLog[];
+}
+
+interface ProcessedHabit {
+  id: string;
+  name: string;
   completedToday: boolean;
-  lastCompletedDate: string | null;
 }
 
 export default function HabitTracker() {
-  const [habits, setHabits] = useState<Habit[]>([]);
+  const [habits, setHabits] = useState<ProcessedHabit[]>([]);
   const [newHabitName, setNewHabitName] = useState('');
   const [isAdding, setIsAdding] = useState(false);
+  const [isPending, startTransition] = useTransition();
 
-  // Load from local storage and reset "completedToday" if a new day has started
-  useEffect(() => {
-    const savedHabits = localStorage.getItem('waypoint_habits');
-    if (savedHabits) {
-      try {
-        const parsedHabits: Habit[] = JSON.parse(savedHabits);
-
-        const today = new Date().toISOString().split('T')[0];
-        const updatedHabits = parsedHabits.map(habit => {
-          if (habit.lastCompletedDate !== today) {
-            return { ...habit, completedToday: false };
-          }
-          return habit;
-        });
-        setHabits(updatedHabits);
-      } catch (e) {
-        console.error("Failed to parse habits", e);
-      }
-    } else {
-      // Default dummy data
-      setHabits([
-        { id: '1', name: 'Read 20 pages', completedToday: false, lastCompletedDate: null },
-        { id: '2', name: 'Drink 2L Water', completedToday: true, lastCompletedDate: new Date().toISOString().split('T')[0] },
-      ]);
-    }
-  }, []);
-
-  // Save to local storage whenever habits change
-  useEffect(() => {
-    localStorage.setItem('waypoint_habits', JSON.stringify(habits));
-  }, [habits]);
-
-  const toggleHabit = (id: string) => {
+  const fetchHabits = async () => {
+    const rawHabits = await getHabits();
     const today = new Date().toISOString().split('T')[0];
-    setHabits(habits.map(habit => {
-      if (habit.id === id) {
-        const isCompletedNow = !habit.completedToday;
-        return {
-          ...habit,
-          completedToday: isCompletedNow,
-          lastCompletedDate: isCompletedNow ? today : habit.lastCompletedDate
-        };
-      }
-      return habit;
-    }));
+
+    const processed = rawHabits.map((habit) => {
+      const todayLog = habit.logs.find(log => log.date === today);
+      return {
+        id: habit.id,
+        name: habit.name,
+        completedToday: todayLog?.completed || false,
+      };
+    });
+    setHabits(processed);
   };
 
-  const addHabit = (e: React.FormEvent) => {
+  useEffect(() => {
+    fetchHabits();
+  }, []);
+
+  const handleToggleHabit = (id: string, currentCompleted: boolean) => {
+    const today = new Date().toISOString().split('T')[0];
+    const newCompleted = !currentCompleted;
+
+    // Optimistic UI update
+    setHabits(habits.map(habit =>
+      habit.id === id ? { ...habit, completedToday: newCompleted } : habit
+    ));
+
+    startTransition(async () => {
+      await toggleHabit(id, newCompleted, today);
+      await fetchHabits(); // Re-sync
+    });
+  };
+
+  const handleAddHabit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!newHabitName.trim()) return;
 
-    const newHabit: Habit = {
-      id: Date.now().toString(),
-      name: newHabitName.trim(),
-      completedToday: false,
-      lastCompletedDate: null
-    };
-
-    setHabits([...habits, newHabit]);
+    const name = newHabitName.trim();
     setNewHabitName('');
     setIsAdding(false);
+
+    startTransition(async () => {
+      await addHabit(name);
+      await fetchHabits();
+    });
   };
 
-  const deleteHabit = (id: string) => {
+  const handleDeleteHabit = (id: string) => {
+    // Optimistic delete
     setHabits(habits.filter(h => h.id !== id));
+
+    startTransition(async () => {
+      await deleteHabit(id);
+      await fetchHabits();
+    });
   };
 
   return (
@@ -95,7 +98,7 @@ export default function HabitTracker() {
       </div>
 
       {isAdding && (
-        <form onSubmit={addHabit} className="mb-4 flex gap-2">
+        <form onSubmit={handleAddHabit} className="mb-4 flex gap-2">
           <input
             type="text"
             value={newHabitName}
@@ -106,14 +109,15 @@ export default function HabitTracker() {
           />
           <button
             type="submit"
-            className="bg-blue-600 text-white px-3 py-1.5 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
+            disabled={isPending}
+            className="bg-blue-600 text-white px-3 py-1.5 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors disabled:opacity-50"
           >
             Add
           </button>
         </form>
       )}
 
-      <div className="space-y-3">
+      <div className={`space-y-3 ${isPending ? 'opacity-70' : ''}`}>
         {habits.length === 0 && !isAdding && (
           <p className="text-sm text-gray-500 italic text-center py-2">No habits tracked yet.</p>
         )}
@@ -122,7 +126,7 @@ export default function HabitTracker() {
           <div key={habit.id} className="flex items-center justify-between group">
             <div
               className="flex items-center gap-3 cursor-pointer flex-1"
-              onClick={() => toggleHabit(habit.id)}
+              onClick={() => handleToggleHabit(habit.id, habit.completedToday)}
             >
               <div
                 className={`w-6 h-6 rounded-full flex items-center justify-center border-2 transition-colors ${
@@ -139,7 +143,7 @@ export default function HabitTracker() {
             </div>
 
             <button
-              onClick={() => deleteHabit(habit.id)}
+              onClick={() => handleDeleteHabit(habit.id)}
               className="text-gray-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded-md hover:bg-red-50"
             >
               <Trash2 size={16} />
