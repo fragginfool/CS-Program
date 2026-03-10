@@ -21,23 +21,38 @@ export async function addTask(title: string, priority: string, dueDateStr?: stri
       order: count // append to end
     }
   })
-  revalidatePath("/tasks")
+  revalidatePath("/")
 }
 
 export async function toggleTaskStatus(id: string, currentStatus: string) {
   const newStatus = currentStatus === "done" ? "todo" : "done"
+
+  // If we are completing the task, log it as a journal post
+  if (newStatus === "done") {
+    const task = await prisma.task.findUnique({ where: { id } })
+    if (task) {
+      await prisma.post.create({
+        data: {
+          author: "User",
+          content: `Completed task: ${task.title}`
+        }
+      })
+    }
+  }
+
   await prisma.task.update({
     where: { id },
     data: { status: newStatus }
   })
-  revalidatePath("/tasks")
+
+  revalidatePath("/")
 }
 
 export async function deleteTask(id: string) {
   await prisma.task.delete({
     where: { id }
   })
-  revalidatePath("/tasks")
+  revalidatePath("/")
 }
 
 export async function updateTaskOrder(items: { id: string, order: number }[]) {
@@ -50,5 +65,5 @@ export async function updateTaskOrder(items: { id: string, order: number }[]) {
   )
 
   await prisma.$transaction(updatePromises)
-  revalidatePath("/tasks")
+  revalidatePath("/")
 }

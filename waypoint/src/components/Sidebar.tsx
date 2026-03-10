@@ -1,12 +1,9 @@
 import Link from 'next/link';
-import { Home, CheckSquare, Target, Calendar } from 'lucide-react';
+import { Home } from 'lucide-react';
 
 export default function Sidebar() {
   const links = [
-    { href: '/', label: 'Journal', icon: Home },
-    { href: '/tasks', label: 'Tasks', icon: CheckSquare },
-    { href: '/goals', label: 'Goals', icon: Target },
-    { href: '/calendar', label: 'Calendar', icon: Calendar },
+    { href: '/', label: 'Home', icon: Home },
   ];
 
   return (
