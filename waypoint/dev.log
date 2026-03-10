@@ -1,0 +1,16 @@
+
+> waypoint@0.1.0 dev
+> next dev
+
+▲ Next.js 16.1.6 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.0.2:3000
+
+✓ Starting...
+✓ Ready in 1070ms
+○ Compiling / ...
+ GET / 200 in 3.7s (compile: 3.3s, render: 379ms)
+ GET / 200 in 203ms (compile: 17ms, render: 186ms)
+ GET /tasks 200 in 1443ms (compile: 1252ms, render: 190ms)
+ GET /goals 200 in 609ms (compile: 509ms, render: 99ms)
+ GET /calendar 200 in 685ms (compile: 580ms, render: 105ms)
