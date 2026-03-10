@@ -1,7 +1,5 @@
 import PostCard, { Post } from '@/components/PostCard';
 import ActivityHeatmap from '@/components/ActivityHeatmap';
-import TasksList from '@/components/TasksList';
-import GoalsList from '@/components/GoalsList';
 import { Camera } from 'lucide-react';
 import { getPosts } from '@/actions/postActions';
 
@@ -23,12 +21,6 @@ export default async function Home() {
     <div className="max-w-3xl mx-auto py-12 px-4 sm:px-6 lg:px-8 space-y-12">
       {/* Activity Heatmap */}
       <ActivityHeatmap />
-
-      {/* Goals Section */}
-      <GoalsList />
-
-      {/* Tasks Section */}
-      <TasksList />
 
       {/* Journal Section */}
       <div>
