@@ -49,7 +49,7 @@ export default function ActivityHeatmap() {
   const [data, setData] = useState<Activity[]>([]);
 
   useEffect(() => {
-    setData(generateMockData());
+    const data = generateMockData(); setData(data);
   }, []);
 
   if (data.length === 0) return null;

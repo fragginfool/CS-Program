@@ -81,32 +81,44 @@ async function main() {
   await prisma.goal.createMany({
     data: [
       {
+        title: 'Complete DB Schema Update',
+        description: 'Add timeframe to Goals table and push to DB.',
+        category: 'Work',
+        timeframe: 'Weekly',
+        progress: 100,
+        targetDate: new Date('2024-03-10'),
+      },
+      {
         title: 'Launch Waypoint MVP',
         description: 'Complete core features including Tasks, Goals, and Calendar views.',
         category: 'Work',
+        timeframe: 'Monthly',
         progress: 75,
-        targetDate: new Date('2023-12-31'),
+        targetDate: new Date('2024-03-31'),
       },
       {
         title: 'Read 24 Books',
         description: 'Two books per month across various genres for continuous learning.',
         category: 'Growth',
+        timeframe: 'Yearly',
         progress: 30,
-        targetDate: new Date('2023-12-31'),
+        targetDate: new Date('2024-12-31'),
       },
       {
         title: 'Run a Half Marathon',
         description: 'Follow 12-week training plan. Current longest run: 8 miles.',
         category: 'Health',
+        timeframe: 'Yearly',
         progress: 60,
-        targetDate: new Date('2023-10-15'),
+        targetDate: new Date('2024-10-15'),
       },
       {
         title: 'Save Emergency Fund',
         description: 'Save 6 months of living expenses in a high-yield savings account.',
         category: 'Finance',
+        timeframe: 'Yearly',
         progress: 85,
-        targetDate: new Date('2023-11-30'),
+        targetDate: new Date('2024-11-30'),
       }
     ]
   })
