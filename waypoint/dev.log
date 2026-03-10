@@ -40,3 +40,5 @@
  GET /tasks 200 in 373ms (compile: 167ms, render: 206ms)
  GET /goals 200 in 265ms (compile: 128ms, render: 137ms)
  GET /calendar 200 in 265ms (compile: 125ms, render: 140ms)
+✓ Compiled in 760ms
+ GET / 200 in 1514ms (compile: 754ms, render: 760ms)
